@@ -9,6 +9,7 @@ import zipfile
 from preloads.linearregression import linearRegression, linearTrain
 from preloads.dualchannelcnn import dualchannel, dualTrain
 from preloads.cnn import ConvNetwork, cnnTrain
+from preloads.vgg import VGG_net, vggTrain
 import pandas as pd
 from colorama import Fore
 
@@ -78,7 +79,7 @@ def asciibling():
     print("\n\n")
 
 def startup(): # startup function
-    currmodels = {"linearregression", "dualcnn", "cnn", "resnet50", "efficientnetb4"}
+    currmodels = {"linearregression", "dualcnn", "cnn", "vgg19", "efficientnetb4"}
     asciibling()
     print("Welcome to Skynet! Current models are listed below: ")
     
@@ -127,8 +128,8 @@ def skynetconsole():
                 dualTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
             elif curr_model == "cnn":
                 cnnTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
-            elif curr_model == "vgg":
-                linearTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
+            elif curr_model == "vgg19":
+                vggTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
             elif curr_model == "efficientnetb4":
                 linearTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
 

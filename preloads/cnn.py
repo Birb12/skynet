@@ -41,7 +41,12 @@ def cnnTrain(epochs, optimizer, batchsize, learningrate, trainingdata):
 
     loader = DataLoader(train_dataset, batchsize, shuffle=True)
     model = ConvNetwork().to(device)
-    optimizer = torch.optim.Adam(model.parameters(), lr=learningrate)
+    
+    if (optimizer == "Adam"):
+        optimizer = torch.optim.Adam(model.parameters(), lr=learningrate)
+    elif (optimizer == "SGD"):
+        optimizer = torch.optim.SGD(model.parameters(), lr=learningrate)
+
     criterion = nn.CrossEntropyLoss()
     least = 999
 
@@ -63,5 +68,5 @@ def cnnTrain(epochs, optimizer, batchsize, learningrate, trainingdata):
 
 def save(model):
     print("Highest accuracy reached, saved parameters")
-    torch.save(model.state_dict(), "bestdual.pth")
+    torch.save(model.state_dict(), "parameters/bestcnn.pth")
 
