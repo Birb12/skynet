@@ -53,10 +53,6 @@ class make_cnn(nn.Module):
                 
         return nn.Sequential(*layers)
 
-        
-
-
-
 class dualchannel(nn.Module):
     def __init__(self):
         super(dualchannel, self).__init__()
@@ -69,41 +65,5 @@ class dualchannel(nn.Module):
         x = torch.cat((x1, x2), dim=1)
         return x
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-numepoch = 10
-data_direction = os.getcwd()
-transform = transforms.Compose([transforms.Resize((50, 50)), transforms.ToTensor()])
-
-def find_datasetcnn(input1):
-    print("Looking for datasets...")
-    os.system("kaggle datasets list -s " + input1)
-
-    inp = str(input("Download dataset (put name and author): "))
-    os.system("kaggle datasets download -d " + inp)
-    
-    index = inp.find('/')
-    strin = os.getcwd()
-
-    if index != -1:
-        inp = inp[index:]
-    else:
-        inp = inp
-
-    try:
-        assert os.path.isfile(strin + inp + ".zip")
-        with zipfile.ZipFile(strin + inp + ".zip", 'r') as z:
-            print("Extracting...")
-            print("Depending on dataset size, this may take a while")
-            z.extractall()
-    except AssertionError:
-        print(".zip not found, assuming extracted dataset")
-    
-    print("Directories found (pick extracted dataset): ")
-    print([name for name in os.listdir(".") if os.path.isdir(os.getcwd())])
-    finaldataset = input()
-
-
-
-find_datasetcnn("breastcancer")
 
 
