@@ -7,7 +7,7 @@ from PIL import Image
 import os
 import zipfile
 from preloads.linearregression import linearRegression, linearTrain
-from preloads.dualchannelcnn import dualchannel
+from preloads.dualchannelcnn import dualchannel, dualTrain
 import pandas as pd
 
 def find_dataset(input1, curr_model):
@@ -39,14 +39,16 @@ def find_dataset(input1, curr_model):
                 if file.endswith(".csv"):
                     finaldataset = os.path.join(os.getcwd(), file)
         else:
-            for file in os.listdir(os.getcwd()):
+            for file in os.listdir(os.getcwd()): # look for folders that arent preloads
                 d = os.path.join(os.getcwd(), file)
                 if os.path.isdir(d):
                     if "preloads" in d:
                         continue
                     else:
-                        finaldataset = d
-            
+                        finaldataset = d    
+                        for file1 in os.listdir(d):
+                            if file1 == "train": # a lot of datasets have the directory train, if not, just set dataset as is
+                                finaldataset = os.path.join(d, os.path.basename(file1))
 
         return finaldataset
     except AssertionError: # if .zip file not found, catch exception and continue
@@ -86,6 +88,7 @@ def customize(curr_model):
     batchsize = int(input("Batch size: "))
     learningrate = float(input("Learning rate: "))
     trainingdata = os.path.join(os.getcwd(), finaldataset)
+
     customization = [epochs, optimizer, batchsize, learningrate, trainingdata]
     return customization
 
@@ -102,6 +105,15 @@ def skynetconsole():
             if curr_model == "linearregression":
                 print("This is a linear regression model. All inputs are expected to be from a .csv")
                 linearTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
+            elif curr_model == "dualcnn":
+                dualTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
+            elif curr_model == "cnn":
+                linearTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
+            elif curr_model == "resnet":
+                linearTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
+            elif curr_model == "efficientnetb4":
+                linearTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
+
 
 skynetconsole()
 

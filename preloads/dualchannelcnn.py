@@ -67,3 +67,35 @@ class dualchannel(nn.Module):
 
 
 
+def dualTrain(epochs, optimizer, batchsize, learningrate, trainingdata):
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    transform = transforms.Compose([transforms.Resize(50, 50), transforms.ToTensor()])
+    train_dataset = torchvision.datasets.ImageFolder(trainingdata, transform)
+
+    loader = DataLoader(train_dataset, batchsize, shuffle=True)
+    model = dualchannel(in_channels=3, num_classes=2).to(device)
+    optimizer = torch.optim.Adam(model.parameters(), lr=learningrate)
+    criterion = nn.CrossEntropyLoss()
+    least = 999
+
+    for epoch in range(epochs):
+        print("EPOCH DONE")
+        for images, labels in loader:
+            images = images.to(device)
+            labels = labels.to(device)
+            preds = model(images)
+            loss = criterion(preds, labels)
+
+            if (loss < least):
+                save(model)
+                least = loss
+            
+            loss.backward()
+            optimizer.step()
+            optimizer.zero_grad()
+            print(loss.item())
+
+def save(model):
+    print("Highest accuracy reached, saved parameters")
+    torch.save(model.state_dict(), "bestdual.pth")
+

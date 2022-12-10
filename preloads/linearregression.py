@@ -56,6 +56,3 @@ def save(model):
     print("Higher accuracy reached, model saved")
     torch.save(model.state_dict(), os.getcwd() + "/bestlinear.pth")
 
-linearTrain(500, "Adam", 50, 0.1, "C:/Users/mined/Desktop/projects/skynet/SAT to GPA.csv")
-
-
