@@ -8,7 +8,9 @@ import os
 import zipfile
 from preloads.linearregression import linearRegression, linearTrain
 from preloads.dualchannelcnn import dualchannel, dualTrain
+from preloads.cnn import ConvNetwork, cnnTrain
 import pandas as pd
+from colorama import Fore
 
 def find_dataset(input1, curr_model):
     print("Looking for datasets...")
@@ -59,9 +61,25 @@ def find_dataset(input1, curr_model):
         finaldataset = input()
         return finaldataset
 
+def asciibling():
+    print("\n\n")
+    print("""                                       ▄▄
+                                    ,▄▓▓▓▓▄
+                                  ╓▓▓▓▓▓▓▓▓▓▓,
+                                 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+                              ▄   ▓▓▓▓▓▓▓▓▓▓▓▓ ,▄
+                           ,▄▓▓▓▓,  ▓▓▓▓▓▓▓▓ ,▓▓▓▓▄,
+                         ,▓▓▓▓▓▓▓▓▓,  ▀▓▓▀  ╓▓▓▓▓▓▓▓▓▓,
+                       ╓▓▓▓▓▓▓▓▓▓▓▓▓▓╖    ▄▓▓▓▓▓▓▓▓▓▓▓▓▓▄
+                     ▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄
+                   ▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄
+                ,▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄,
+               ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓""")
+    print("\n\n")
 
 def startup(): # startup function
     currmodels = {"linearregression", "dualcnn", "cnn", "resnet50", "efficientnetb4"}
+    asciibling()
     print("Welcome to Skynet! Current models are listed below: ")
     
     for i in currmodels:
@@ -108,8 +126,8 @@ def skynetconsole():
             elif curr_model == "dualcnn":
                 dualTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
             elif curr_model == "cnn":
-                linearTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
-            elif curr_model == "resnet":
+                cnnTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
+            elif curr_model == "vgg":
                 linearTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
             elif curr_model == "efficientnetb4":
                 linearTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
