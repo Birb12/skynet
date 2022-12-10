@@ -57,7 +57,7 @@ class dualchannel(nn.Module):
     def __init__(self):
         super(dualchannel, self).__init__()
         self.ConvNetA = make_cnn()
-        self.ConvNetB = make_cnn()
+        self.ConvNetB = make_cnn() # combine the two channels
     def forward(self, x):
         x1 = self.ConvNetA.forward(x)
         x2 = self.ConvNetB.forward(x)
