@@ -97,6 +97,12 @@ def find_datasetcnn(input1):
             z.extractall()
     except AssertionError:
         print(".zip not found, assuming extracted dataset")
+    
+    print("Directories found (pick extracted dataset): ")
+    print([name for name in os.listdir(".") if os.path.isdir(os.getcwd())])
+    finaldataset = input()
+
+
 
 find_datasetcnn("breastcancer")
 
