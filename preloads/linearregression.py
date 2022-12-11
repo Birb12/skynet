@@ -52,7 +52,21 @@ def linearTrain(epochs, optimizer, batchsize, learningrate, trainingdata):
 
         print('epoch {}: loss {}'.format(epoch, loss))
 
+def linearImplement(x):
+    model = linearRegression(1, 1)
+    model.load_state_dict(torch.load("parameters/bestlinear.pth"))
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    model.eval()
+    x = torch.tensor(x)
+    x = x.float()
+    input = x.to(device)
+
+    y = model(input)
+    print("Output: ")
+
+    for out in y:
+        print(out.item())
+
 def save(model):
     print("Higher accuracy reached, model saved")
-    torch.save(model.state_dict(), os.getcwd() + "/bestlinear.pth")
-
+    torch.save(model.state_dict(), os.getcwd() + "/parameters/bestlinear.pth")

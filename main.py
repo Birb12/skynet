@@ -6,10 +6,11 @@ from torch.utils.data import DataLoader
 from PIL import Image
 import os
 import zipfile
-from preloads.linearregression import linearRegression, linearTrain
+from preloads.linearregression import linearRegression, linearTrain, linearImplement
 from preloads.dualchannelcnn import dualchannel, dualTrain
 from preloads.cnn import ConvNetwork, cnnTrain
 from preloads.vgg import VGG_net, vggTrain
+from preloads.efficientnet import EfficientNet, efficientTrain
 import pandas as pd
 from colorama import Fore
 
@@ -46,6 +47,8 @@ def find_dataset(input1, curr_model):
                 d = os.path.join(os.getcwd(), file)
                 if os.path.isdir(d):
                     if "preloads" in d:
+                        continue
+                    elif "parameters" in d:
                         continue
                     else:
                         finaldataset = d    
@@ -131,7 +134,14 @@ def skynetconsole():
             elif curr_model == "vgg19":
                 vggTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
             elif curr_model == "efficientnetb4":
-                linearTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
+                efficientTrain(customization[0], customization[1], customization[2], customization[3], customization[4])
+        if userinput == "implement":
+            if curr_model == "linearregression":
+                x = int(input("Input LR 1: "))
+                y = int(input("Input LR 2: "))
+                li = [x, y]
+                linearImplement(li)
+                
 
 
 skynetconsole()
