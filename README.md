@@ -14,4 +14,4 @@ Customize: Customize the pre-loaded AI model -- You can customize the optimizer,
 
 Train: Trains the pre-loaded AI model after customization, assuming you uploaded a dataset or used skynet's dataset finding feature when using start.
 
-Implement: Implements the pre-loaded AI model after training. For linear regression, you can input two x-values, and for all other CNNs, you can input the path of one image.
+Implement: Implements the pre-loaded AI model after training. For linear regression, you can input two x-values, and for all other models, you can input the path of one image.
