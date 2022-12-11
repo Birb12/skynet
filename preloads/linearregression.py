@@ -5,10 +5,10 @@ import numpy as np
 import torch.nn as nn
 import os
 
-class linearRegression(torch.nn.Module):
-    def __init__(self, inputSize, outputSize):
-        super(linearRegression, self).__init__()
-        self.linear = torch.nn.Linear(inputSize, outputSize)
+class linearreg(nn.Module):
+    def __init__(self, inp, outp):
+        super(linearreg, self).__init__()
+        self.linear = torch.nn.Linear(inp, outp)
     def forward(self, x):
         x = x.view(x.size(0), -1)
         out = self.linear(x)
@@ -17,7 +17,7 @@ class linearRegression(torch.nn.Module):
 def linearTrain(epochs, optimizer, batchsize, learningrate, trainingdata):
     print(trainingdata)
     x,y = np.loadtxt(trainingdata, unpack=True, delimiter=',')
-    model = linearRegression(1, 1)
+    model = linearreg(1, 1)
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     if (optimizer == "Adam"):
@@ -25,7 +25,7 @@ def linearTrain(epochs, optimizer, batchsize, learningrate, trainingdata):
     elif (optimizer == "SGD"):
         optimizer = torch.optim.SGD(model.parameters(), lr=learningrate)
 
-    criterion = nn.MSELoss()
+    criterion = nn.CrossEntropyLoss()
 
     least = 9999999
 
@@ -53,7 +53,7 @@ def linearTrain(epochs, optimizer, batchsize, learningrate, trainingdata):
         print('epoch {}: loss {}'.format(epoch, loss))
 
 def linearImplement(x):
-    model = linearRegression(1, 1)
+    model = linearreg(1, 1)
     model.load_state_dict(torch.load(os.getcwd() + "/parameters/bestlinear.pth"))
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model.eval()
