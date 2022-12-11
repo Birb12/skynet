@@ -70,3 +70,19 @@ def save(model):
     print("Highest accuracy reached, saved parameters")
     torch.save(model.state_dict(), "parameters/bestcnn.pth")
 
+
+def cnnImplement(imagepath): # run one image through the model
+    model = ConvNetwork()
+    model.load_state_dict(torch.load(os.getcwd() + "/parameters/bestcnn.pth"))
+    model.eval()
+
+    image = Image.open(imagepath)
+    transform = transforms.Compose([transforms.Resize((50, 50)), transforms.ToTensor()])
+    image = transform(image).float()
+    image = image.unsqueeze(0)
+
+    output = model(image)
+    _, predicted = torch.max(output.data, 1)
+    return predicted.item()
+
+cnnImplement("images.jpg")

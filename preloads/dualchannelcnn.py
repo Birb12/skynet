@@ -7,6 +7,7 @@ import os
 import torchvision
 import torchvision.transforms.functional as TorchFunctional
 import zipfile
+from PIL import Image
 
 change = {
     'curr': [32, 'M', 64, 'M', 128, 128, 'M', 256, 'M', 512, 'M'], # use this to customize settings later
@@ -101,7 +102,22 @@ def dualTrain(epochs, optimizer, batchsize, learningrate, trainingdata):
             optimizer.zero_grad()
             print(loss.item())
 
+def dualImplement(imagepath): # run one image through the model
+    model = dualchannel()
+    model.load_state_dict(torch.load(os.getcwd() + "/parameters/bestdual.pth"))
+    model.eval()
+
+    image = Image.open(imagepath)
+    transform = transforms.Compose([transforms.Resize((50, 50)), transforms.ToTensor()])
+    image = transform(image).float()
+    image = image.unsqueeze(0)
+
+    output = model(image)
+    _, predicted = torch.max(output.data, 1)
+    return predicted.item()
+
+
 def save(model):
     print("Highest accuracy reached, saved parameters")
-    torch.save(model.state_dict(), "parameters/bestdual.pth")
+    torch.save(model.state_dict(), "/parameters/bestdual.pth")
 

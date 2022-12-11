@@ -7,10 +7,10 @@ from PIL import Image
 import os
 import zipfile
 from preloads.linearregression import linearRegression, linearTrain, linearImplement
-from preloads.dualchannelcnn import dualchannel, dualTrain
-from preloads.cnn import ConvNetwork, cnnTrain
-from preloads.vgg import VGG_net, vggTrain
-from preloads.efficientnet import EfficientNet, efficientTrain
+from preloads.dualchannelcnn import dualchannel, dualTrain, dualImplement
+from preloads.cnn import ConvNetwork, cnnTrain, cnnImplement
+from preloads.vgg import VGG_net, vggTrain, vggImplement
+from preloads.efficientnet import EfficientNet, efficientTrain, efficientImplement
 import pandas as pd
 from colorama import Fore
 
@@ -141,6 +141,19 @@ def skynetconsole():
                 y = int(input("Input LR 2: "))
                 li = [x, y]
                 linearImplement(li)
+            elif curr_model == "dualcnn":
+                image = input("Input image path: ")
+                print("Output: " + str(dualImplement(image)))
+            elif curr_model == "cnn":
+                image = input("Input image path: ")
+                print("Output: " + str(cnnImplement(image)))
+            elif curr_model == "vgg19":
+                image = input("Input image path: ")
+                print("Output: " + str(vggImplement(image)))
+            elif curr_model == "efficientnetb4":
+                image = input("Input image path: ")
+                print("Output: " + str(efficientImplement(image)))
+
                 
 
 

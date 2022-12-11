@@ -8,6 +8,7 @@ import torch.nn as nn
 import matplotlib.pyplot as plt
 import numpy as np
 from torch.utils.data import DataLoader
+from PIL import Image
 
 VGG = {
     'VGG19': [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 256, 'M', 512, 512, 512, 512, 'M', 512, 512, 512, 512, 'M'],
@@ -91,3 +92,17 @@ def vggTrain(epochs, optimizer, batchsize, learningrate, trainingdata):
 def save(model):
     print("Highest accuracy reached, saved parameters")
     torch.save(model.state_dict(), "parameters/bestvgg.pth")
+
+def vggImplement(imagepath): # run one image through the model
+    model = VGG_net()
+    model.load_state_dict(torch.load(os.getcwd() + "/parameters/bestvgg.pth"))
+    model.eval()
+
+    image = Image.open(imagepath)
+    transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()])
+    image = transform(image).float()
+    image = image.unsqueeze(0)
+
+    output = model(image)
+    _, predicted = torch.max(output.data, 1)
+    return predicted.item()

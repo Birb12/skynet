@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from torch.utils.data import DataLoader
 import torchvision
+from PIL import Image
 
 from math import ceil
 
@@ -205,3 +206,17 @@ def efficientTrain(epochs, optimizer, batchsize, learningrate, trainingdata):
 def save(model):
     print("Highest accuracy reached, saved parameters")
     torch.save(model.state_dict(), "parameters/bestefficient.pth")
+
+def efficientImplement(imagepath): # run one image through the model
+    model = EfficientNet()
+    model.load_state_dict(torch.load(os.getcwd() + "/parameters/bestefficient.pth"))
+    model.eval()
+
+    image = Image.open(imagepath)
+    transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()])
+    image = transform(image).float()
+    image = image.unsqueeze(0)
+
+    output = model(image)
+    _, predicted = torch.max(output.data, 1)
+    return predicted.item()
