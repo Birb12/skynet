@@ -50,7 +50,7 @@ def linearTrain(epochs, optimizer, batchsize, learningrate, trainingdata):
 
         optimizer.step()
 
-        print('epoch {}: loss {}'.format(epoch, loss))
+        print("Curr Epoch: " + str(epoch) + " | Loss: " + str(loss.item()))
 
 def linearImplement(x):
     model = linearreg(1, 1)
