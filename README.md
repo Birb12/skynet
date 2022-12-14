@@ -1,5 +1,7 @@
 # skynet
 
+# Built for FHacks 2022
+
 Need to make, train, and implement an AI model in 50 seconds or less? Skynet is your program.
 
 Skynet makes AI easy: With just a few commands, you can build, train, and implement your AI model.
